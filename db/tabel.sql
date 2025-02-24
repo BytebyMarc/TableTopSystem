@@ -39,3 +39,33 @@ CREATE TABLE ArmeeComposition(
 
 );
 
+CREATE TABLE Tournament (
+    ID_Tournament INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ID_Users INTEGER,
+    FOREIGN KEY (ID_Users) REFERENCES Users(ID_Users),
+    Name VARCHAR(50),
+    MaxSubscriber INTEGER,
+    PLZ INTEGER,
+    Ort VARCHAR(50),
+    Price INTEGER,
+    LastDate DATETIME,
+    MaxPoint INTEGER,
+    Start DATETIME,
+    End DATETIME,
+    Information TEXT,
+    Paypal VARCHAR,
+    DateInsertEntry DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE Subscriber(
+    ID_Subscriber INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ID_Tournament INTEGER,
+    FOREIGN KEY (ID_Tournament) REFERENCES Tournament(ID_Tournament),
+    ID_Users INTEGER,
+    FOREIGN KEY (ID_Users) REFERENCES Users(ID_Users),
+    ID_Army INTEGER,
+    FOREIGN KEY (ID_Army) REFERENCES ArmyList(ID_Army),
+    Payed TINYINT,
+    DateInsertEntry DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
