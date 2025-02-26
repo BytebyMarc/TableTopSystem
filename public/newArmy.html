@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrierung</title>
+    <link rel="stylesheet" href="master.css">
+
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<div class="container">
+
+    <h2>New Army</h2>
+    <form action="/create-armylist" method="post">
+        <!-- Falls die Benutzer-ID aus der Session stammt, als Hidden-Feld -->
+        <input type="hidden" name="ID_Users" value="1">
+
+        <label for="name">Name der Armee:</label>
+        <input type="text" id="name" name="Name" placeholder="Armee-Name" required>
+
+        <label for="id_gamesystem">Spielsystem:</label>
+        <!-- Beispiel: als Texteingabe -->
+        <input type="text" id="id_gamesystem" name="ID_GameSystem" placeholder="Spielsystem ID" required>
+        <!-- Alternativ als Dropdown (bei dynamischer Befüllung):
+        <select id="id_gamesystem" name="ID_GameSystem" required>
+            <option value="">Bitte wählen</option>
+            <option value="1">System 1</option>
+            <option value="2">System 2</option>
+            ...
+        </select>
+        -->
+
+        <label for="points">Punkte:</label>
+        <input type="number" id="points" name="Points" placeholder="Punkte" required>
+
+        <input type="submit" value="Armeeliste erstellen">
+    </form>
+
+</div>
+<script src="navigation.js"></script>
+</body>
+</html>
