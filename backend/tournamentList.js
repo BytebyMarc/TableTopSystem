@@ -10,7 +10,7 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
 });
 
 // Route für die Anzeige der Turnierliste
-router.get('/tournamentList', (req, res) => {
+router.get('/', (req, res) => {
     db.all(`SELECT * FROM Tournament`, (err, rows) => {
         if (err) {
             console.error("Fehler beim Abrufen der Turniere:", err.message);
