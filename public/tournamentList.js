@@ -11,7 +11,7 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
 
 // Route für die Anzeige der Turnierliste
 router.get('/',isAuthenticated, (req, res) => {
-    db.all(`SELECT * FROM Tournament`, (err, rows) => {
+    db.all(`SELECT * FROM Tournament WHERE ID_Users != ${req.session.userId}`, (err, rows) => {
         if (err) {
             console.error("Fehler beim Abrufen der Turniere:", err.message);
             return res.status(500).send("Fehler beim Abrufen der Turniere.");
@@ -40,7 +40,7 @@ router.get('/',isAuthenticated, (req, res) => {
                 <p><strong>Preis:</strong> ${tournament.Price}€</p>
                 <p><strong>Start:</strong> ${tournament.Start}</p>
                 <p><strong>Ende:</strong> ${tournament.End}</p>
-                <a href="/tournament-details?id=${tournament.ID_Tournament}">Details ansehen</a>
+                <a href="/tournamentDetails?id=${tournament.ID_Tournament}">Details ansehen</a>
             </div>
       `;
         });

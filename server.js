@@ -21,9 +21,12 @@ const registerRouter = require('./backend/register.js');
 const newArmy = require('./public/newArmy.js');
 const login = require('./public/login.js');
 const listArmy = require('./public/listArmy.js');
+const armyComposition = require('./public/armyComposition.js');
 const tournamentList = require('./public/tournamentList.js');
 const tournamentCreate = require('./public/tournamentCreate.js');
 const logout = require('./public/logout.js');
+const army = require('./public/army.js');
+const tournamentDetails = require('./public/tournamentDetails.js');
 
 // Nutze die Routen
 app.use('/register', registerRouter);
@@ -33,6 +36,9 @@ app.use('/listArmy', listArmy);
 app.use('/tournamentList', tournamentList);
 app.use('/create-tournament', tournamentCreate);
 app.use('/logout', logout);
+app.use('/armyComposition', armyComposition);
+app.use('/army', army)
+app.use('/tournamentDetails', tournamentDetails)
 
 // Falls du noch andere Routen hast, kannst du sie hier einbinden
 app.listen(port, () => {

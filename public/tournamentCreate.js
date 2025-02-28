@@ -1,7 +1,6 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
-const req = require("express/lib/request");
 const isAuthenticated = require('../middleware/isAuthenticated');
 
 // Verbindung zur SQLite-Datenbank herstellen oder importieren, falls zentral verwaltet
@@ -10,9 +9,10 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
         console.error("Fehler beim Öffnen der Datenbank:", err.message);
     }
 });
-//ID_Users = req.session.userId;
+
 // GET-Route: HTML-Formular anzeigen
 router.get('/', isAuthenticated, (req, res) => {
+
     res.send(`
         <!DOCTYPE html>
         <html lang="de">
@@ -28,7 +28,7 @@ router.get('/', isAuthenticated, (req, res) => {
                     <h2>Neues Turnier anlegen</h2>
                     <form action="/create-tournament" method="post">
                         <!-- Hidden-Feld für Benutzer-ID -->
-                        <input type="hidden" name="ID_Users" value="1">
+                       
                         
                         <div class="tournament-form-group">
                             <label for="name">Turniername:</label>
@@ -97,8 +97,9 @@ router.get('/', isAuthenticated, (req, res) => {
 
 // POST-Route: Turnier erstellen
 router.post('/', (req, res) => {
-    const { ID_Users, Name, MaxSubscriber, PLZ, Ort, Price, LastDate, MaxPoint, Start, End, Information, Paypal } = req.body;
 
+    const { Name, MaxSubscriber, PLZ, Ort, Price, LastDate, MaxPoint, Start, End, Information, Paypal } = req.body;
+    const ID_Users = req.session.userId;
     const sql = `
         INSERT INTO Tournament 
           (ID_Users, Name, MaxSubscriber, PLZ, Ort, Price, LastDate, MaxPoint, Start, End, Information, Paypal)

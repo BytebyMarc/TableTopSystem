@@ -50,8 +50,8 @@ router.get('/',isAuthenticated, (req, res) => {
 
 // POST-Route: Formulardaten verarbeiten und in die Datenbank einfügen
 router.post('/', (req, res) => {
-    const { ID_Users, Name, ID_GameSystem, Points } = req.body;
-
+    const { Name, ID_GameSystem, Points } = req.body;
+    const ID_Users = req.session.userId;
     // Überprüfen, ob alle Felder ausgefüllt sind
     if (!ID_Users || !Name || !ID_GameSystem || !Points) {
         return res.status(400).send("Alle Felder müssen ausgefüllt sein.");

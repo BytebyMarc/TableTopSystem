@@ -14,7 +14,7 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
 
 // GET-Route: Zeigt alle Armeelisten an
 router.get('/',isAuthenticated, (req, res) => {
-    const sql = `SELECT * FROM ArmyList`;
+    const sql = `SELECT * FROM ArmyList WHERE ID_Users = ${req.session.userId}`;
     db.all(sql, [], (err, rows) => {
         if (err) {
             console.error("Fehler bei der Abfrage der Armeelisten:", err.message);
@@ -48,13 +48,21 @@ router.get('/',isAuthenticated, (req, res) => {
         `;
         rows.forEach((row) => {
             html += `
-                        <tr>
-                            <td>${row.ID_Army}</td>
-                            <td>${row.ID_Users}</td>
-                            <td>${row.Name}</td>
-                            <td>${row.ID_GameSystem}</td>
-                            <td>${row.Points}</td>
-                        </tr>
+                                <tr>
+            <td>${row.ID_Army}</td>
+            <td>${row.ID_Users}</td>
+            <td>${row.Name}</td>
+            <td>${row.ID_GameSystem}</td>
+            <td>${row.Points}</td>
+            <td>
+                 <a href="/armyComposition?armyId=${row.ID_Army}">
+                                    <button>Einheiten hinzufügen</button>
+                                </a>
+                                <a href="/army?armyId=${row.ID_Army}">
+                                    <button>Armee anzeigen</button>
+                                </a>
+            </td>
+        </tr>
             `;
         });
         html += `

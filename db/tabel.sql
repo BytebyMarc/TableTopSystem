@@ -30,7 +30,7 @@ CREATE TABLE ArmyList(
 );
 
 CREATE TABLE ArmeeComposition(
-    ID_ArmeeComposition INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ID_ArmeeComposition INTEGER PRIMARY KEY AUTOINCREMENT,
     ID_Army INTEGER,
     FOREIGN KEY (ID_Army) REFERENCES ArmyList(ID_Army),
     Fraction INTEGER,
