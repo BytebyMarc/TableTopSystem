@@ -1,7 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
-
+const isAuthenticated = require('../middleware/isAuthenticated');
 // Verbindung zur SQLite-Datenbank herstellen oder importieren, falls zentral verwaltet
 const db = new sqlite3.Database('backend/database.db', (err) => {
     if (err) {
@@ -10,7 +10,7 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
 });
 
 // Route für die Anzeige der Turnierliste
-router.get('/', (req, res) => {
+router.get('/',isAuthenticated, (req, res) => {
     db.all(`SELECT * FROM Tournament`, (err, rows) => {
         if (err) {
             console.error("Fehler beim Abrufen der Turniere:", err.message);

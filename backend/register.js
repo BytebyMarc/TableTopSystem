@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
 
-// Verbindung zur SQLite-Datenbank herstellen oder importieren, falls du sie zentral verwaltest
+// Verbindung zur SQLite-Datenbank herstellen
 const db = new sqlite3.Database('backend/database.db', (err) => {
     if (err) {
         console.error("Fehler beim Öffnen der Datenbank:", err.message);
@@ -12,8 +12,42 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
     }
 });
 
-// Route für die Registrierung
-router.post('/register', async (req, res) => {
+// GET-Route: Registrierungsformular anzeigen
+router.get('/', (req, res) => {
+    const html = `
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registrierung</title>
+        <link rel="stylesheet" href="master.css">
+    </head>
+    <body>
+    <div id="nav-placeholder"></div>
+    <div class="container">
+        <h2>Registrierung</h2>
+        <form action="/register" method="post">
+            <label for="email">E-Mail:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required>
+    
+            <label for="confirm_password">Passwort bestätigen:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+    
+            <input type="submit" value="Registrieren">
+        </form>
+    </div>
+    <script src="navigation.js"></script>
+    </body>
+    </html>
+    `;
+    res.send(html);
+});
+
+// POST-Route: Registrierung verarbeiten
+router.post('/', async (req, res) => {
     const { email, password, confirm_password } = req.body;
 
     if (password !== confirm_password) {

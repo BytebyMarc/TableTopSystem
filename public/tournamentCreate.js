@@ -1,6 +1,8 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
+const req = require("express/lib/request");
+const isAuthenticated = require('../middleware/isAuthenticated');
 
 // Verbindung zur SQLite-Datenbank herstellen oder importieren, falls zentral verwaltet
 const db = new sqlite3.Database('backend/database.db', (err) => {
@@ -8,9 +10,9 @@ const db = new sqlite3.Database('backend/database.db', (err) => {
         console.error("Fehler beim Öffnen der Datenbank:", err.message);
     }
 });
-
+//ID_Users = req.session.userId;
 // GET-Route: HTML-Formular anzeigen
-router.get('/', (req, res) => {
+router.get('/', isAuthenticated, (req, res) => {
     res.send(`
         <!DOCTYPE html>
         <html lang="de">
